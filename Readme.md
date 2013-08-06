@@ -25,6 +25,16 @@ At Skillshare I was a back-end turned full-stack engineer who helped develop the
 ### Rapleaf (Summer 2011)
 I was an engineering intern at Rapleaf (now LiveRamp). I worked on the web team developing the InstantData product and lots of internal tools. Their stack was Ruby, Rails, JQuery, Sass.
 
+Education
+---------
 
+I studied Computer Science at Oberlin College, with minors in Math and Philosophy.
 
+Research
+--------
 
+### Algorithmic Game Theory
+I spent the summer of 2010 doing research with professors Tom Wexler, Alexa Sharp, and Kevin Woods in algorithmic game theory. My specific work was on "the virus innoculation game." The results were even less interesting than you might expect.
+
+### Heliospheric Physics
+I spent a summer in high school at science camp working on a project with professor Charles W. Smith. The project was related to his work on interplanetary traveling bow shocks. He asked me to continue working with him after the summer doing some data processing. The project resulted in publication. 
