@@ -1,0 +1,382 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+
+% Simpler bibsection for CV sections
+% (thanks to natbib for inspiration)
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newenvironment{bibsection}%
+        {\vspace{-\baselineskip}\begin{list}{}{%
+       \setlength{\leftmargin}{\bibhang}%
+       \setlength{\itemindent}{-\leftmargin}%
+       \setlength{\itemsep}{\bibsep}%
+       \setlength{\parsep}{\z@}%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+\makeatother
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+%% This gives us fun enumeration environments. compactitem will be nice.
+\usepackage{paralist}
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The title (name) with a horizontal rule under it
+%
+% Usage: \makeheading{name}
+%
+% Place at top of document. It should be the first thing.
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+% The section headings
+%
+% Usage: \section{section name}
+%
+% Follow this section IMMEDIATELY with the first line of the section
+% text. Do not put whitespace in between. That is, do this:
+%
+%       \section{My Information}
+%       Here is my information.
+%
+% and NOT this:
+%
+%       \section{My Information}
+%
+%       Here is my information.
+%
+% Otherwise the top of the section header will not line up with the top
+% of the section. Of course, using a single comment character (%) on
+% empty lines allows for the function of the first example with the
+% readability of the second example.
+\renewcommand{\section}[2]%
+        {\pagebreak[3]\vspace{1.3\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{itemize}[#1]}{\end{itemize}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactitem}[#1]}{\end{compactitem}}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{loneinnerlist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{compactitem}[#1]}
+        {\end{compactitem}\vspace{-.6\baselineskip}}
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+% Uses hyperref to link DOI
+\newcommand\doilink[1]{\href{http://dx.doi.org/#1}{#1}}
+\newcommand\doi[1]{doi:\doilink{#1}}
+
+% For \url{SOME_URL}, links SOME_URL to the url SOME_URL
+\providecommand*\url[1]{\href{#1}{#1}}
+% Same as above, but pretty-prints SOME_URL in teletype fixed-width font
+\renewcommand*\url[1]{\href{#1}{\texttt{#1}}}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+\providecommand*\email[1]{\href{mailto:#1}{#1}}
+% Same as above, but pretty-prints ADDRESS in teletype fixed-width font
+%\renewcommand*\email[1]{\href{mailto:#1}{\texttt{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Gabriel Isman}
+
+\section{Contact Information}
+%
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table.
+%
+% ALSO: \rcollength is the width of the right column of the table
+%       (adjust it to your liking; default is 1.85in).
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength}p{\rcollength}}
+Gabe Isman
+                           & \textit{Phone:} +1-413-559-0108 \\
+80 Lexington Ave. \#203           & \email{gabe.isman@gmail.com}\\
+Brooklyn, New York 11238 & \href{https://github.com/GabeIsman}{github.com/GabeIsman} \\
+\end{tabular}
+
+\section{Summary}
+%
+Full-stack web developer looking for work on an interesting project, with a great
+team, and plentiful opportunities for learning and growth.
+
+\section{Education}
+%
+\href{http://www.oberlin.edu/}{\textbf{Oberlin College}},
+Oberlin, Ohio USA
+        \begin{innerlist}
+        \item BA in \href{http://www.cs.oberlin.edu}{Computer Science}, minors in Math and Philosophy
+        \item GPA: 3.90
+        \end{innerlist}
+
+        \section{Technical\\Skills}
+%
+Languages: PHP, JavaScript, SQL, Ruby, HTML, CSS
+
+Frameworks: Yii, Backbone, Rails, JQuery
+
+Applications: Git, MySQL, nginx, memcached, Redis, Sass, node
+
+Services: AWS (OpsWorks, EC2, S3, RDS, ElasticBeanstalk)
+
+\section{Work Experience}
+%
+\textbf{\href{http://www.skillshare.com/}{Skillshare}},
+\begin{outerlist}
+
+\item[] \textit{Software Engineer} \hfill \textbf{June 2012 to July 2013}
+    \begin{innerlist}
+        \item Was hired to build out Skillshare's PHP/Yii/MySQL back-end.
+        Transitioned to a full-stack dev as the app evolved to be client-driven.
+        \item Cut application server response time by 40\% through query optimization,
+        caching strategies, and application architecture modifications.
+        \item Migrated back-end infrastructure from AWS ElasticBeanstalk to OpsWorks.
+        \item Migrated several key components of the product to be  rendered
+        client-side.
+        \item Worked collaboratively on a small product team, both leading features
+        and supporting teammates with ideas and input, iterating very quickly as we
+        developed and refined a new product.
+        \item More details available on my github \href{http://github.com/gabeisman/resume}{resume}
+    \end{innerlist}
+\end{outerlist}
+
+\blankline
+
+\textbf{\href{http://www.liveramp.com/}{Rapleaf (now LiveRamp)}},
+\begin{outerlist}
+
+\item[] \textit{Software Engineering Intern} \hfill \textbf{Summer 2011}
+\begin{innerlist}
+	\item Interned on the web team at Rapleaf, a big-data, ad-tech startup. I
+    developed and deployed a variety of consumer, customer, and internal tools.
+    I worked across their Ruby/Rails/SQL/JQuery/Sass stack.
+\end{innerlist}
+\end{outerlist}
+
+\blankline
+
+\textbf{\href{http://www.cs.oberlin.edu/}{Oberlin Computer Science Department}},
+\begin{outerlist}
+
+\item[] \textit{Research Assistant} \hfill \textbf{Summer 2010}
+\begin{innerlist}
+	\item Did research in algorithmic game theory with Professor Tom Wexler, and others of Oberlin and Carleton Colleges.
+\end{innerlist}
+\item[] \textit{TA, Grader, and Tutor}%
+        \hfill \textbf{September 2009 to May 2012}
+\end{outerlist}
+
+\blankline
+
+\blankline
+
+\href{http://www.eos.unh.edu/}{\textbf{Institute for the Study of Earth, Oceans, and Space}},
+Durham, NH
+\begin{outerlist}
+
+\item[] \textit{Research Assistant to Charles W. Smith}%
+        \hfill \textbf{June 2007 to January 2008}
+\begin{innerlist}
+    \item Assisted Professor Smith with various menial tasks associated with
+    processing data from the ACE satellite during solar events.
+\end{innerlist}
+
+\end{outerlist}
+
+\blankline
+
+
+\section{Conference\\Publications} \begin{bibsection}
+  \item Smith, Charles W.; Lee, Martin A.; Haggerty, Dennis K. et al. Preliminary Results from SEP and ESP Studies in \emph{PARTICLE ACCELERATION AND TRANSPORT IN THE HELIOSPHERE AND BEYOND: 7th Annual International Astrophysics Conference. AIP Conference Proceedings}, Volume 1039, pp. 168-173. 2008.
+\end{bibsection}
+
+
+\section{Honors}
+%
+ National Science Foundation S-STEM Scholar in Computation and Modeling at Oberlin College, 2010 -- 2012 \\
+
+
+John F. Oberlin Scholar, 2008 -- 2012
+
+
+
+\section{References Available on Request}
+
+%
+% \href
+% {http://www.skillshare.com/about/team}
+% {\textbf{Eric Ma}}
+% (e-mail:~\href{mailto:eric@skillshare.com}{eric@skillshare.com})
+% %
+% \begin{innerlist}
+%     \item Lead Developer,
+%         \href{http://www.skillshare.com/}{Skillshare}
+
+%     \item \emph{Eric is my direct manager and leads the engineering team.}
+% \end{innerlist}
+
+% \blankline
+
+% %
+% \href
+% {http://www.skillshare.com/about/team}
+% {\textbf{Andrew Mercando}}
+% (e-mail:~\href{mailto:andrew@skillshare.com}{andrew@skillshare.com})
+% %
+% \begin{innerlist}
+%     \item Lead Designer,
+%         \href{http://www.skillshare.com/}{Skillshare}
+
+%     \item \emph{Andrew and I have worked closely on many projects.}
+% \end{innerlist}
+
+% \blankline
+
+% \href{}
+% {\textbf{Anneka Gupta}}
+% (e-mail:~\href{mailto:anneka@rapleaf.com}{anneka@rapleaf.com})
+% \begin{innerlist}
+%     \item Product Manager at LiveRamp
+%     \item\emph{Anneka was my manager and mentor for the summer I worked at Rapleaf.}
+% \end{innerlist}
+
+\blankline
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
